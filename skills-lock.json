@@ -235,6 +235,12 @@
       "skillPath": "skills/programmatic-seo/SKILL.md",
       "computedHash": "d342924e63f84cfa721cee705f748d60010cfa591cb810af35d2dd7f31fe6336"
     },
+    "quiz-funnel-expert": {
+      "source": "gquthier/quiz-funnel-expert",
+      "sourceType": "github",
+      "skillPath": "SKILL.md",
+      "computedHash": "c6c8e5277456d260b45a9445e395d673006a91c7788163b7186bf95908152565"
+    },
     "replicate-webhooks": {
       "source": "hookdeck/webhook-skills",
       "sourceType": "github",

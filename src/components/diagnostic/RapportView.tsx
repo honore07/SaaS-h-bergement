@@ -1,11 +1,12 @@
 "use client";
 
-import { useMemo, useSyncExternalStore } from "react";
+import { useEffect, useMemo, useRef, useSyncExternalStore } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { formatEuros } from "@/lib/format";
+import { track } from "@/lib/tracking";
 import { InfractionCard } from "./InfractionCard";
 import { ScoreGauge } from "./ScoreGauge";
 import { STORAGE_KEY } from "./DiagnosticWizard";
@@ -84,6 +85,17 @@ export function RapportView() {
       return null;
     }
   }, [brut, pret]);
+
+  // Événement result_viewed (une seule fois par rapport affiché).
+  const resultTrace = useRef(false);
+  useEffect(() => {
+    if (!report || resultTrace.current) return;
+    resultTrace.current = true;
+    track("result_viewed", {
+      score: report.score,
+      pack: report.packRecommande,
+    });
+  }, [report]);
 
   function refaire() {
     try {
@@ -216,6 +228,9 @@ export function RapportView() {
         <p className="mt-1 text-sm text-brand-900/70">{pack.contenu}</p>
         <Link
           href={`/regulariser?pack=${report.packRecommande}`}
+          onClick={() =>
+            track("pack_cta_clicked", { pack: report.packRecommande })
+          }
           className="mt-5 inline-flex items-center justify-center rounded-lg bg-brand-700 px-6 py-3 text-base font-semibold text-white shadow-sm transition-colors hover:bg-brand-800"
         >
           Régulariser ma situation

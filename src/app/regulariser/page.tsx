@@ -86,9 +86,38 @@ const urgences: Urgence[] = [
 
 const CTA_LABEL = "Commencer par le diagnostic gratuit";
 
-export default function RegulariserPage() {
+// Ids de packs acceptés dans ?pack= (handoff depuis le diagnostic).
+const PACK_IDS = ["essentiel", "complet", "express"] as const;
+type PackId = (typeof PACK_IDS)[number];
+
+function packRecommandeDepuisParam(valeur: unknown): PackId | null {
+  return typeof valeur === "string" && PACK_IDS.includes(valeur as PackId)
+    ? (valeur as PackId)
+    : null;
+}
+
+export default async function RegulariserPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
+  const recommande = packRecommandeDepuisParam((await searchParams).pack);
+  const packRecommande = recommande
+    ? PACKS.find((p) => p.id === recommande)
+    : undefined;
+
   return (
     <>
+      {/* Bandeau handoff diagnostic → pack recommandé */}
+      {packRecommande && (
+        <div className="border-b border-brand-900/10 bg-brand-700 text-white">
+          <div className="mx-auto max-w-6xl px-4 py-4 text-center text-sm font-medium sm:px-6">
+            D&apos;après votre diagnostic, le {packRecommande.name} correspond
+            à votre situation. Il est mis en avant ci-dessous.
+          </div>
+        </div>
+      )}
+
       {/* Intro */}
       <section className="border-b border-brand-900/10 bg-white">
         <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-20">
@@ -115,18 +144,28 @@ export default function RegulariserPage() {
       {/* Packs */}
       <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-20">
         <div className="grid gap-6 lg:grid-cols-3">
-          {PACKS.map((pack) => (
+          {PACKS.map((pack) => {
+            // Avec ?pack=, seule la recommandation issue du diagnostic est
+            // mise en avant ; sans paramètre, l'affichage reste inchangé.
+            const estRecommande = recommande === pack.id;
+            const misEnAvant = recommande ? estRecommande : pack.highlight;
+            const badge = recommande
+              ? estRecommande
+                ? "Recommandé pour vous"
+                : null
+              : pack.badge;
+            return (
             <div
               key={pack.id}
-              className={`relative flex flex-col rounded-2xl border bg-white p-8 shadow-sm ${
-                pack.highlight
-                  ? "border-brand-600 ring-2 ring-brand-600/20"
-                  : "border-brand-900/10"
+              className={`relative flex flex-col rounded-2xl border bg-white p-8 ${
+                misEnAvant
+                  ? "border-brand-600 shadow-md ring-2 ring-brand-600/20"
+                  : "border-brand-900/10 shadow-sm"
               }`}
             >
-              {pack.badge ? (
+              {badge ? (
                 <Badge tone="brand" className="absolute -top-3 left-8">
-                  {pack.badge}
+                  {badge}
                 </Badge>
               ) : null}
               <h2 className="text-xl font-semibold text-brand-950">
@@ -157,13 +196,14 @@ export default function RegulariserPage() {
               </ul>
               <CtaLink
                 href="/diagnostic"
-                variant={pack.highlight ? "primary" : "outline"}
+                variant={misEnAvant ? "primary" : "outline"}
                 className="mt-8 w-full"
               >
                 {CTA_LABEL}
               </CtaLink>
             </div>
-          ))}
+            );
+          })}
         </div>
         <p className="mt-6 text-center text-sm text-foreground/55">
           Aucun paiement à cette étape : le diagnostic gratuit détermine
