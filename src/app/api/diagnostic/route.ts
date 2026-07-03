@@ -81,31 +81,33 @@ export async function POST(request: Request) {
 
   const report: DiagnosticReport = { ...scoring, synthese };
 
-  // 3. Contact Brevo — fire-and-forget (jamais bloquant, catch silencieux).
-  creerContactBrevo({
-    email: contact.email,
-    ...(contact.prenom ? { prenom: contact.prenom } : {}),
-    score: report.score,
-    expositionEur: report.expositionTotale,
-    packRecommande: report.packRecommande,
-    commune: input.base.commune,
-    typeHebergement: input.base.typeHebergement,
-    revenusAnnuels: input.base.revenusAnnuels,
-  });
-
-  // 4. Notification n8n (lead) — fire-and-forget.
-  notifierN8n(input, contact, report);
+  // 3 + 4. Contact Brevo et notification n8n — best-effort (catch silencieux,
+  // timeout 5 s chacun) mais ATTENDUS : en serverless (Vercel), un fetch non
+  // attendu est tué dès que la réponse part, et le lead serait perdu.
+  await Promise.allSettled([
+    creerContactBrevo({
+      email: contact.email,
+      ...(contact.prenom ? { prenom: contact.prenom } : {}),
+      score: report.score,
+      expositionEur: report.expositionTotale,
+      packRecommande: report.packRecommande,
+      commune: input.base.commune,
+      typeHebergement: input.base.typeHebergement,
+      revenusAnnuels: input.base.revenusAnnuels,
+    }),
+    notifierN8n(input, contact, report),
+  ]);
 
   return Response.json(report);
 }
 
 // Envoie le lead au workflow n8n « GiteOuvert — Lead diagnostic » si
-// N8N_WEBHOOK_URL est défini. Ne bloque jamais la réponse au client.
-function notifierN8n(
+// N8N_WEBHOOK_URL est défini. Best-effort : ne lève jamais.
+async function notifierN8n(
   input: DiagnosticInput,
   contact: DiagnosticContact,
   report: DiagnosticReport
-): void {
+): Promise<void> {
   const url = process.env.N8N_WEBHOOK_URL;
   if (!url) return;
   const lead = {
@@ -126,7 +128,7 @@ function notifierN8n(
       infractions: report.infractions.map((i) => ({ id: i.id })),
     },
   };
-  fetch(url, {
+  await fetch(url, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(lead),

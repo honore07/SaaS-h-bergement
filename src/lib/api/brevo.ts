@@ -1,6 +1,7 @@
 // Client Brevo — création/mise à jour du contact issu du diagnostic.
 // Usage STRICTEMENT côté serveur (la clé API ne doit jamais fuiter côté client).
-// Fire-and-forget : ne lève jamais, ne bloque jamais la réponse de l'API.
+// Best-effort : ne lève jamais. La promesse doit être attendue par l'appelant
+// (en serverless, un fetch non attendu est tué au gel de la lambda).
 
 export interface BrevoContactDiagnostic {
   email: string;
@@ -13,7 +14,9 @@ export interface BrevoContactDiagnostic {
   revenusAnnuels: number;
 }
 
-export function creerContactBrevo(contact: BrevoContactDiagnostic): void {
+export async function creerContactBrevo(
+  contact: BrevoContactDiagnostic
+): Promise<void> {
   const apiKey = process.env.BREVO_API_KEY;
   if (!apiKey) return;
 
@@ -37,7 +40,7 @@ export function creerContactBrevo(contact: BrevoContactDiagnostic): void {
       listId !== undefined && Number.isFinite(listId) ? [listId] : undefined,
   };
 
-  fetch("https://api.brevo.com/v3/contacts", {
+  await fetch("https://api.brevo.com/v3/contacts", {
     method: "POST",
     headers: {
       "api-key": apiKey,
