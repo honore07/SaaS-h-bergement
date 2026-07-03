@@ -68,5 +68,38 @@ export async function POST(request: Request) {
   const synthese = await genererSynthese(input, scoring);
 
   const report: DiagnosticReport = { ...scoring, synthese };
+
+  // 3. Notification n8n (lead) — fire-and-forget, sans données nominatives.
+  notifierN8n(input, report);
+
   return Response.json(report);
+}
+
+// Envoie le lead au workflow n8n « GiteOuvert — Lead diagnostic » si
+// N8N_WEBHOOK_URL est défini. Ne bloque jamais la réponse au client.
+function notifierN8n(input: DiagnosticInput, report: DiagnosticReport): void {
+  const url = process.env.N8N_WEBHOOK_URL;
+  if (!url) return;
+  const lead = {
+    base: {
+      commune: input.base.commune,
+      codeInsee: input.base.codeInsee,
+      typeHebergement: input.base.typeHebergement,
+      revenusAnnuels: input.base.revenusAnnuels,
+    },
+    report: {
+      score: report.score,
+      expositionTotale: report.expositionTotale,
+      packRecommande: report.packRecommande,
+      infractions: report.infractions.map((i) => ({ id: i.id })),
+    },
+  };
+  fetch(url, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(lead),
+    signal: AbortSignal.timeout(5000),
+  }).catch(() => {
+    // Le lead n8n est best-effort : jamais d'impact sur le diagnostic.
+  });
 }
