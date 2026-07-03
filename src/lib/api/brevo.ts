@@ -40,16 +40,25 @@ export async function creerContactBrevo(
       listId !== undefined && Number.isFinite(listId) ? [listId] : undefined,
   };
 
-  await fetch("https://api.brevo.com/v3/contacts", {
-    method: "POST",
-    headers: {
-      "api-key": apiKey,
-      "Content-Type": "application/json",
-      Accept: "application/json",
-    },
-    body: JSON.stringify(body),
-    signal: AbortSignal.timeout(5000),
-  }).catch(() => {
+  try {
+    const res = await fetch("https://api.brevo.com/v3/contacts", {
+      method: "POST",
+      headers: {
+        "api-key": apiKey,
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify(body),
+      signal: AbortSignal.timeout(5000),
+    });
+    if (!res.ok && res.status !== 204) {
+      // 201 = créé, 204 = mis à jour. Le reste est loggé pour diagnostic
+      // (visible dans les logs Vercel), sans jamais impacter la réponse.
+      const detail = await res.text().catch(() => "");
+      console.warn(`[brevo] contact non enregistré: ${res.status} ${detail}`);
+    }
+  } catch (err) {
     // Best-effort : l'échec Brevo n'impacte jamais le diagnostic.
-  });
+    console.warn(`[brevo] appel échoué: ${String(err)}`);
+  }
 }
