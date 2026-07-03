@@ -17,7 +17,19 @@ import type {
 
 export const STORAGE_KEY = "gio_diagnostic_report";
 
-const ETAPES = ["Votre hébergement", "Vos obligations", "Analyse"] as const;
+const ETAPES = [
+  "Votre hébergement",
+  "Vos obligations",
+  "Votre rapport",
+  "Analyse",
+] as const;
+
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+/** Corps envoyé à POST /api/diagnostic : diagnostic + contact obligatoire. */
+type DiagnosticPayload = DiagnosticInput & {
+  contact: { email: string; prenom?: string; consent: true };
+};
 
 interface QuestionDef {
   key: keyof DiagnosticAnswers;
@@ -120,6 +132,11 @@ export function DiagnosticWizard() {
   // Étape 2 — les 8 questions
   const [reponses, setReponses] = useState<Record<string, string>>({});
 
+  // Étape 3 — email gate (le rapport n'est jamais accessible sans email)
+  const [prenom, setPrenom] = useState("");
+  const [email, setEmail] = useState("");
+  const [consent, setConsent] = useState(false);
+
   const [erreur, setErreur] = useState<string | null>(null);
   const [statut, setStatut] = useState<"saisie" | "envoi" | "echec">("saisie");
   const envoiEnCours = useRef(false);
@@ -138,7 +155,28 @@ export function DiagnosticWizard() {
     QUESTIONS.every((q) => reponses[q.key] !== undefined) &&
     (reponses.dpe !== "oui" || CLASSES_DPE.includes(reponses.dpeClasse as ClasseDPE));
 
-  const construireInput = useCallback((): DiagnosticInput => {
+  const nbRepondues = QUESTIONS.filter(
+    (q) => reponses[q.key] !== undefined
+  ).length;
+
+  // Teaser scorecard : nombre de réponses non conformes, SANS révéler les
+  // chiffres (score et exposition restent derrière l'email gate).
+  const nbVigilance = QUESTIONS.reduce((acc, q) => {
+    const valeur = reponses[q.key];
+    if (valeur === undefined) return acc;
+    if (q.key === "dpe") {
+      const dpeRisque =
+        valeur !== "oui" ||
+        reponses.dpeClasse === "F" ||
+        reponses.dpeClasse === "G";
+      return acc + (dpeRisque ? 1 : 0);
+    }
+    return acc + (valeur !== "oui" ? 1 : 0);
+  }, 0);
+
+  const emailValide = EMAIL_REGEX.test(email.trim());
+
+  const construireInput = useCallback((): DiagnosticPayload => {
     const answers = {
       declaloc: reponses.declaloc,
       numeroAffiche: reponses.numeroAffiche,
@@ -163,8 +201,23 @@ export function DiagnosticWizard() {
         classe: classe as YesNoUnknown,
       },
       answers,
+      contact: {
+        email: email.trim(),
+        ...(prenom.trim() !== "" ? { prenom: prenom.trim() } : {}),
+        consent: true,
+      },
     };
-  }, [adresse, classe, codeInsee, commune, reponses, revenusNum, typeHebergement]);
+  }, [
+    adresse,
+    classe,
+    codeInsee,
+    commune,
+    email,
+    prenom,
+    reponses,
+    revenusNum,
+    typeHebergement,
+  ]);
 
   const envoyer = useCallback(async () => {
     if (envoiEnCours.current) return;
@@ -206,8 +259,24 @@ export function DiagnosticWizard() {
         return;
       }
       setEtape(2);
-      void envoyer();
     }
+  }
+
+  // Email gate : seule porte d'accès au rapport.
+  function validerGate() {
+    setErreur(null);
+    if (!emailValide) {
+      setErreur("Merci d'indiquer une adresse email valide pour recevoir votre rapport.");
+      return;
+    }
+    if (!consent) {
+      setErreur(
+        "Merci de cocher la case de consentement : elle nous autorise à vous envoyer votre rapport par email."
+      );
+      return;
+    }
+    setEtape(3);
+    void envoyer();
   }
 
   function precedent() {
@@ -346,6 +415,7 @@ export function DiagnosticWizard() {
             <QuestionCard
               key={q.key}
               numero={index + 1}
+              total={QUESTIONS.length}
               libelle={q.libelle}
               name={q.key}
               options={q.options}
@@ -383,11 +453,106 @@ export function DiagnosticWizard() {
               )}
             </QuestionCard>
           ))}
+          {nbRepondues >= 6 && (
+            <p className="text-center text-sm font-medium text-brand-700">
+              Plus qu&apos;une étape : votre score personnalisé s&apos;affiche
+              juste après.
+            </p>
+          )}
         </div>
       )}
 
-      {/* Étape 3 — envoi et analyse */}
+      {/* Étape 3 — email gate : le rapport n'est jamais accessible sans email */}
       {etape === 2 && (
+        <Card className="mx-auto max-w-xl">
+          <div className="mb-6 text-center">
+            <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-brand-700">
+              Analyse terminée
+            </p>
+            <h2 className="mb-3 text-xl font-bold">
+              Votre score de conformité est calculé
+            </h2>
+            <p className="text-sm text-foreground/60">
+              {nbVigilance > 0 ? (
+                <>
+                  <span className="font-semibold text-accent-700">
+                    {nbVigilance} point{nbVigilance > 1 ? "s" : ""} de
+                    vigilance détecté{nbVigilance > 1 ? "s" : ""} sur 8
+                  </span>{" "}
+                  dans vos réponses. Indiquez où envoyer votre rapport pour
+                  découvrir votre score, vos risques chiffrés en euros et vos
+                  priorités de régularisation.
+                </>
+              ) : (
+                <>
+                  Aucun point de vigilance détecté sur les 8 contrôles.
+                  Indiquez où envoyer votre rapport pour découvrir votre score
+                  détaillé et nos recommandations.
+                </>
+              )}
+            </p>
+          </div>
+
+          <form
+            className="space-y-4"
+            onSubmit={(e) => {
+              e.preventDefault();
+              validerGate();
+            }}
+            noValidate
+          >
+            <div>
+              <Label htmlFor="gate-prenom">Prénom (facultatif)</Label>
+              <Input
+                id="gate-prenom"
+                type="text"
+                autoComplete="given-name"
+                maxLength={80}
+                placeholder="Ex. Camille"
+                value={prenom}
+                onChange={(e) => setPrenom(e.target.value)}
+              />
+            </div>
+
+            <div>
+              <Label htmlFor="gate-email">Votre email</Label>
+              <Input
+                id="gate-email"
+                type="email"
+                autoComplete="email"
+                required
+                placeholder="vous@exemple.fr"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
+
+            <label className="flex cursor-pointer items-start gap-2.5 text-sm text-foreground/70">
+              <input
+                type="checkbox"
+                checked={consent}
+                onChange={(e) => setConsent(e.target.checked)}
+                className="mt-0.5 h-4 w-4 rounded border-brand-900/20 accent-brand-700"
+              />
+              <span>
+                J&apos;accepte de recevoir mon rapport de conformité et des
+                conseils réglementaires par email. Désinscription en un clic.
+              </span>
+            </label>
+
+            <Button type="submit" size="lg" className="w-full">
+              Voir mon score et recevoir mon rapport
+            </Button>
+
+            <p className="text-center text-xs text-foreground/50">
+              Gratuit · Sans engagement · Vos données restent en France
+            </p>
+          </form>
+        </Card>
+      )}
+
+      {/* Étape 4 — envoi et analyse */}
+      {etape === 3 && (
         <Card className="py-12 text-center">
           {statut === "echec" ? (
             <div>
@@ -400,7 +565,7 @@ export function DiagnosticWizard() {
               </p>
               <div className="flex justify-center gap-3">
                 <Button variant="outline" onClick={precedent}>
-                  Revenir aux questions
+                  Revenir
                 </Button>
                 <Button onClick={() => void envoyer()}>Réessayer</Button>
               </div>
@@ -441,7 +606,14 @@ export function DiagnosticWizard() {
             Précédent
           </Button>
           <Button size="lg" onClick={suivant}>
-            {etape === 1 ? "Analyser ma situation" : "Suivant"}
+            {etape === 1 ? "Calculer mon score" : "Suivant"}
+          </Button>
+        </div>
+      )}
+      {etape === 2 && (
+        <div className="mt-4 text-center">
+          <Button variant="ghost" onClick={precedent}>
+            Précédent
           </Button>
         </div>
       )}

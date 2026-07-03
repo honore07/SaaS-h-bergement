@@ -32,6 +32,36 @@ const PACKS: Record<
   },
 };
 
+// Contenu par palier (pattern scorecard « dynamic content per tier »).
+function palierPourScore(score: number): {
+  titre: string;
+  message: string;
+  classes: string;
+} {
+  if (score <= 3) {
+    return {
+      titre: "Situation critique — régularisation urgente recommandée",
+      message:
+        "Plusieurs obligations majeures ne sont pas remplies. Chaque semaine compte : une régularisation spontanée réduit fortement les pénalités.",
+      classes: "border-red-200 bg-red-50 text-red-800",
+    };
+  }
+  if (score <= 6) {
+    return {
+      titre: "Fondations fragiles — plusieurs manquements à corriger",
+      message:
+        "Votre base est là, mais des manquements vous exposent encore. En les traitant dans l'ordre ci-dessous, vous sécurisez rapidement votre activité.",
+      classes: "border-accent-300 bg-accent-50 text-accent-800",
+    };
+  }
+  return {
+    titre: "Bonne base — quelques ajustements pour être serein",
+    message:
+      "Vous êtes proche de la conformité complète. Les quelques points restants se corrigent simplement et vous mettent à l'abri des contrôles.",
+    classes: "border-brand-200 bg-brand-50 text-brand-800",
+  };
+}
+
 // Lecture de sessionStorage via useSyncExternalStore : le rendu serveur
 // affiche l'état de chargement (sentinelle), le client se resynchronise
 // juste après l'hydratation.
@@ -104,6 +134,7 @@ export function RapportView() {
   }
 
   const pack = PACKS[report.packRecommande];
+  const palier = palierPourScore(report.score);
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-10 sm:py-14">
@@ -120,6 +151,9 @@ export function RapportView() {
             : `${report.infractions.length} infraction${
                 report.infractions.length > 1 ? "s" : ""
               } détectée${report.infractions.length > 1 ? "s" : ""} d'après vos réponses.`}
+        </p>
+        <p className="text-center text-xs text-foreground/50">
+          Votre rapport complet vous a également été envoyé par email.
         </p>
       </Card>
 
@@ -146,6 +180,12 @@ export function RapportView() {
           {report.synthese}
         </p>
       </Card>
+
+      {/* Bandeau de palier (contenu dynamique selon le score) */}
+      <div className={`mb-6 rounded-2xl border px-5 py-4 ${palier.classes}`}>
+        <p className="font-semibold">{palier.titre}</p>
+        <p className="mt-1 text-sm opacity-90">{palier.message}</p>
+      </div>
 
       {/* Infractions par ordre de priorité */}
       {ordonnees.length > 0 && (

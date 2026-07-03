@@ -1,11 +1,22 @@
 import { z } from "zod";
 import { calculerScoring } from "@/lib/diagnostic/scoring";
 import { genererSynthese } from "@/lib/diagnostic/claude";
+import { creerContactBrevo } from "@/lib/api/brevo";
 import type { DiagnosticInput, DiagnosticReport } from "@/lib/diagnostic/types";
 
 const yesNoUnknown = z.enum(["oui", "non", "ne_sais_pas"]);
 
+// Contact requis : le rapport n'est jamais délivré sans email + consentement.
+const contactSchema = z.object({
+  email: z.email(),
+  prenom: z.string().max(80).optional(),
+  consent: z.literal(true),
+});
+
+type DiagnosticContact = z.infer<typeof contactSchema>;
+
 const diagnosticInputSchema = z.object({
+  contact: contactSchema,
   base: z.object({
     adresse: z.string().min(1).max(300),
     codeInsee: z.string().min(1).max(10),
@@ -58,7 +69,8 @@ export async function POST(request: Request) {
     );
   }
 
-  const input: DiagnosticInput = parsed.data;
+  const { contact, ...input }: DiagnosticInput & { contact: DiagnosticContact } =
+    parsed.data;
 
   // 1. Moteur déterministe — toujours exécuté, source de vérité des chiffres.
   const scoring = calculerScoring(input);
@@ -69,18 +81,38 @@ export async function POST(request: Request) {
 
   const report: DiagnosticReport = { ...scoring, synthese };
 
-  // 3. Notification n8n (lead) — fire-and-forget, sans données nominatives.
-  notifierN8n(input, report);
+  // 3. Contact Brevo — fire-and-forget (jamais bloquant, catch silencieux).
+  creerContactBrevo({
+    email: contact.email,
+    ...(contact.prenom ? { prenom: contact.prenom } : {}),
+    score: report.score,
+    expositionEur: report.expositionTotale,
+    packRecommande: report.packRecommande,
+    commune: input.base.commune,
+    typeHebergement: input.base.typeHebergement,
+    revenusAnnuels: input.base.revenusAnnuels,
+  });
+
+  // 4. Notification n8n (lead) — fire-and-forget.
+  notifierN8n(input, contact, report);
 
   return Response.json(report);
 }
 
 // Envoie le lead au workflow n8n « GiteOuvert — Lead diagnostic » si
 // N8N_WEBHOOK_URL est défini. Ne bloque jamais la réponse au client.
-function notifierN8n(input: DiagnosticInput, report: DiagnosticReport): void {
+function notifierN8n(
+  input: DiagnosticInput,
+  contact: DiagnosticContact,
+  report: DiagnosticReport
+): void {
   const url = process.env.N8N_WEBHOOK_URL;
   if (!url) return;
   const lead = {
+    contact: {
+      email: contact.email,
+      prenom: contact.prenom,
+    },
     base: {
       commune: input.base.commune,
       codeInsee: input.base.codeInsee,

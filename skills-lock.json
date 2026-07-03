@@ -247,6 +247,12 @@
       "skillPath": "skills/resend-webhooks/SKILL.md",
       "computedHash": "193b849f4e1b4e6b5ac7b827d3d2db78ca0a546390eed7c4e78332afda79fa48"
     },
+    "scorecard-marketing": {
+      "source": "wondelai/skills",
+      "sourceType": "github",
+      "skillPath": "scorecard-marketing/SKILL.md",
+      "computedHash": "a7fea37b6ac442c20dd9b43e5bc32847a0a24f0a38eeaadcc813241426f96355"
+    },
     "scrapfly-webhooks": {
       "source": "hookdeck/webhook-skills",
       "sourceType": "github",

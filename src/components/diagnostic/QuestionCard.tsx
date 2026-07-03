@@ -10,6 +10,7 @@ export interface QuestionOption {
 
 export function QuestionCard({
   numero,
+  total,
   libelle,
   name,
   options,
@@ -18,6 +19,8 @@ export function QuestionCard({
   children,
 }: {
   numero: number;
+  /** Nombre total de questions — affiche « Question X sur N » (momentum). */
+  total?: number;
   libelle: string;
   name: string;
   options: QuestionOption[];
@@ -28,6 +31,11 @@ export function QuestionCard({
 }) {
   return (
     <Card className="p-5">
+      {total !== undefined && (
+        <p className="mb-1 text-xs font-medium uppercase tracking-wide text-foreground/40">
+          Question {numero} sur {total}
+        </p>
+      )}
       <p className="mb-3 text-sm font-semibold text-foreground">
         <span className="mr-2 inline-flex h-6 w-6 items-center justify-center rounded-full bg-brand-100 text-xs font-bold text-brand-800">
           {numero}
