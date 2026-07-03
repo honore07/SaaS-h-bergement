@@ -1,0 +1,335 @@
+{
+  "version": 1,
+  "skills": {
+    "calculator-design": {
+      "source": "rampstackco/claude-skills",
+      "sourceType": "github",
+      "skillPath": "skills/calculator-design/SKILL.md",
+      "computedHash": "416fe7e214081c271308838053858f2d5e7ccc154a6db2aae52306be347d57be"
+    },
+    "chargebee-webhooks": {
+      "source": "hookdeck/webhook-skills",
+      "sourceType": "github",
+      "skillPath": "skills/chargebee-webhooks/SKILL.md",
+      "computedHash": "a73ada01fd5b907a6045c838c92952acc8a4b63ea4651e41746f6a030b8dc285"
+    },
+    "claude-managed-agents-webhooks": {
+      "source": "hookdeck/webhook-skills",
+      "sourceType": "github",
+      "skillPath": "skills/claude-managed-agents-webhooks/SKILL.md",
+      "computedHash": "a02605201cc89fa03310ade272576da82fbcb126adf2b27e064397ef24aa6a56"
+    },
+    "clerk-webhooks": {
+      "source": "hookdeck/webhook-skills",
+      "sourceType": "github",
+      "skillPath": "skills/clerk-webhooks/SKILL.md",
+      "computedHash": "bcd94c2181b30d5a9209fce04ba3ab183488c37a1aae4a9899278c3d7f195c28"
+    },
+    "cursor-webhooks": {
+      "source": "hookdeck/webhook-skills",
+      "sourceType": "github",
+      "skillPath": "skills/cursor-webhooks/SKILL.md",
+      "computedHash": "99a6bb328e1c3aceb47c0232ebeea60bbc917bfadcec8514ed29fb803095959c"
+    },
+    "deepgram-webhooks": {
+      "source": "hookdeck/webhook-skills",
+      "sourceType": "github",
+      "skillPath": "skills/deepgram-webhooks/SKILL.md",
+      "computedHash": "b47b89061dc9927037886bc29a49d8759991e2bf70736303c2e602dae2b26185"
+    },
+    "discord-webhooks": {
+      "source": "hookdeck/webhook-skills",
+      "sourceType": "github",
+      "skillPath": "skills/discord-webhooks/SKILL.md",
+      "computedHash": "35df8bb030f2da10e171918e9301763cefc0eb0851c17958e4b82989304a470c"
+    },
+    "elevenlabs-webhooks": {
+      "source": "hookdeck/webhook-skills",
+      "sourceType": "github",
+      "skillPath": "skills/elevenlabs-webhooks/SKILL.md",
+      "computedHash": "50eb27b29ecb70d841a9362a4ef98899b6b047f78d96863fd61a488684561d54"
+    },
+    "frontend-design": {
+      "source": "anthropics/skills",
+      "sourceType": "github",
+      "skillPath": "skills/frontend-design/SKILL.md",
+      "computedHash": "4eabc66183767153e404b39d1b839b1c37f2d82d86f0a0d7e880a579d8d62336"
+    },
+    "fusionauth-webhooks": {
+      "source": "hookdeck/webhook-skills",
+      "sourceType": "github",
+      "skillPath": "skills/fusionauth-webhooks/SKILL.md",
+      "computedHash": "6b8c5de25b431185c79d172acbc2015818e5079f71618b950a37b4b4ce919533"
+    },
+    "gemini-webhooks": {
+      "source": "hookdeck/webhook-skills",
+      "sourceType": "github",
+      "skillPath": "skills/gemini-webhooks/SKILL.md",
+      "computedHash": "9436b28b6271f314c19e1b63b0672e159804a6260419c247eeb68b0e6464f440"
+    },
+    "github-webhooks": {
+      "source": "hookdeck/webhook-skills",
+      "sourceType": "github",
+      "skillPath": "skills/github-webhooks/SKILL.md",
+      "computedHash": "e608d5a78eb9d7510f5701e3b3e2d19fb89f7badbd01102c865dd478bebbb430"
+    },
+    "gitlab-webhooks": {
+      "source": "hookdeck/webhook-skills",
+      "sourceType": "github",
+      "skillPath": "skills/gitlab-webhooks/SKILL.md",
+      "computedHash": "31a8f67ed753a527a73ae3c7be7d048f68281c87fef705f9272c75287965d287"
+    },
+    "hookdeck-event-gateway": {
+      "source": "hookdeck/webhook-skills",
+      "sourceType": "github",
+      "skillPath": "skills/hookdeck-event-gateway/SKILL.md",
+      "computedHash": "6b8ea77155dc8c79df894dd658cb2a9855e8a6d36f1fb39c75b529079a87fc38"
+    },
+    "hookdeck-event-gateway-webhooks": {
+      "source": "hookdeck/webhook-skills",
+      "sourceType": "github",
+      "skillPath": "skills/hookdeck-event-gateway-webhooks/SKILL.md",
+      "computedHash": "4a77ac7693e7533e3dcdd258fb7c9320257727121b070d427ed9dc04968e47c9"
+    },
+    "hubspot-webhooks": {
+      "source": "hookdeck/webhook-skills",
+      "sourceType": "github",
+      "skillPath": "skills/hubspot-webhooks/SKILL.md",
+      "computedHash": "717c56d7c4d44d260357f40c94b4b57e743b0f587aa7b3ce1aedb6f04774f894"
+    },
+    "huggingface-webhooks": {
+      "source": "hookdeck/webhook-skills",
+      "sourceType": "github",
+      "skillPath": "skills/huggingface-webhooks/SKILL.md",
+      "computedHash": "5e0cd91b24c74b21697994b5ae93959ec4c98968bf89e93e84587237b98d94b5"
+    },
+    "intercom-webhooks": {
+      "source": "hookdeck/webhook-skills",
+      "sourceType": "github",
+      "skillPath": "skills/intercom-webhooks/SKILL.md",
+      "computedHash": "d24132424fd005d4f8d173494bc265d7639517882e3cc902e9f6edc5c3919b30"
+    },
+    "knock-webhooks": {
+      "source": "hookdeck/webhook-skills",
+      "sourceType": "github",
+      "skillPath": "skills/knock-webhooks/SKILL.md",
+      "computedHash": "f484f90a2f9d6cedffcef7116704f35dad6ef24e35ae0a825352e71e0f2946bf"
+    },
+    "lead-magnet-design": {
+      "source": "rampstackco/claude-skills",
+      "sourceType": "github",
+      "skillPath": "skills/lead-magnet-design/SKILL.md",
+      "computedHash": "4a5819536e9197f8937684a7288e5b22d805859bdf5c201cf5a2892cdecbb8aa"
+    },
+    "linear-webhooks": {
+      "source": "hookdeck/webhook-skills",
+      "sourceType": "github",
+      "skillPath": "skills/linear-webhooks/SKILL.md",
+      "computedHash": "f373a134ef2b678681218edf0ac39e6e27e83ff356a70fd640cfe05ff5319404"
+    },
+    "mailgun-webhooks": {
+      "source": "hookdeck/webhook-skills",
+      "sourceType": "github",
+      "skillPath": "skills/mailgun-webhooks/SKILL.md",
+      "computedHash": "62ed3023c68918cbb04c6774fd3ec7c7f0561f4a52705733ecb737a765ca1ee7"
+    },
+    "nextjs-advanced-routing": {
+      "source": "wsimmonds/claude-nextjs-skills",
+      "sourceType": "github",
+      "skillPath": "nextjs-advanced-routing/SKILL.md",
+      "computedHash": "ea02aa0d789885b9eb6581e7c7067391a34053e174e7fde3be7c728c83ab42af"
+    },
+    "nextjs-app-router-fundamentals": {
+      "source": "wsimmonds/claude-nextjs-skills",
+      "sourceType": "github",
+      "skillPath": "nextjs-app-router-fundamentals/SKILL.md",
+      "computedHash": "2d73efbbc227187a78d547d80e7e778d179048d592530dc9f69c8307eee6ae76"
+    },
+    "nextjs-client-cookie-pattern": {
+      "source": "wsimmonds/claude-nextjs-skills",
+      "sourceType": "github",
+      "skillPath": "nextjs-client-cookie-pattern/SKILL.md",
+      "computedHash": "16630bc614194e6581b73fb8960862dca469eae4e4d1dcf76cfcf0f283d17ab3"
+    },
+    "nextjs-dynamic-routes-params": {
+      "source": "wsimmonds/claude-nextjs-skills",
+      "sourceType": "github",
+      "skillPath": "nextjs-dynamic-routes-params/SKILL.md",
+      "computedHash": "2ca39f4c8f1a58778f16d72197a1e507772de1ed26b3f443d0f86b4aa74c41fa"
+    },
+    "nextjs-pathname-id-fetch": {
+      "source": "wsimmonds/claude-nextjs-skills",
+      "sourceType": "github",
+      "skillPath": "nextjs-pathname-id-fetch/SKILL.md",
+      "computedHash": "15c522f8767131e16ea2c9f96d760ab90291ee69a2bed2fe27e7f74e033749d4"
+    },
+    "nextjs-server-client-components": {
+      "source": "wsimmonds/claude-nextjs-skills",
+      "sourceType": "github",
+      "skillPath": "nextjs-server-client-components/SKILL.md",
+      "computedHash": "ee0d1cb73ab2cb5c5cf7961d3b618f09a62d384edc77000d734b02edfdc68074"
+    },
+    "nextjs-server-navigation": {
+      "source": "wsimmonds/claude-nextjs-skills",
+      "sourceType": "github",
+      "skillPath": "nextjs-server-navigation/SKILL.md",
+      "computedHash": "d869f3a28c60b706c82ab968b32e550575fad182b5cf6d16db5bbe94f0e9977f"
+    },
+    "nextjs-use-search-params-suspense": {
+      "source": "wsimmonds/claude-nextjs-skills",
+      "sourceType": "github",
+      "skillPath": "nextjs-use-search-params-suspense/SKILL.md",
+      "computedHash": "747f676d84e7fe3d274bac9f4fa7cf66f3d5ca6238cb3a386008fc2654eccc36"
+    },
+    "notion-webhooks": {
+      "source": "hookdeck/webhook-skills",
+      "sourceType": "github",
+      "skillPath": "skills/notion-webhooks/SKILL.md",
+      "computedHash": "f6203b69cb672c544482b8e24177de7c20bb801ad78124eb3e878018baee6036"
+    },
+    "openai-webhooks": {
+      "source": "hookdeck/webhook-skills",
+      "sourceType": "github",
+      "skillPath": "skills/openai-webhooks/SKILL.md",
+      "computedHash": "20f8b256bde0d19e812ce14202136d2acd6b3a205c205852c2307931c8c9ea23"
+    },
+    "openclaw-webhooks": {
+      "source": "hookdeck/webhook-skills",
+      "sourceType": "github",
+      "skillPath": "skills/openclaw-webhooks/SKILL.md",
+      "computedHash": "05c898c175f178669397c9fb60b0d1544bd25b90ef9b355f28383cda4b044566"
+    },
+    "orb-webhooks": {
+      "source": "hookdeck/webhook-skills",
+      "sourceType": "github",
+      "skillPath": "skills/orb-webhooks/SKILL.md",
+      "computedHash": "06f214c78a5471bfbe16b4dbf6985cfcae39d4ca7e6bd20c4db50d819061a6de"
+    },
+    "outpost": {
+      "source": "hookdeck/webhook-skills",
+      "sourceType": "github",
+      "skillPath": "skills/outpost/SKILL.md",
+      "computedHash": "e1ac65792245538fc97b1d7640744603cec4df08395f145b72cd362486fecd24"
+    },
+    "paddle-webhooks": {
+      "source": "hookdeck/webhook-skills",
+      "sourceType": "github",
+      "skillPath": "skills/paddle-webhooks/SKILL.md",
+      "computedHash": "02cba6b60aced3edeb37a866811c1104e4ae0cf775490bde4517a1cd17021ccc"
+    },
+    "paypal-webhooks": {
+      "source": "hookdeck/webhook-skills",
+      "sourceType": "github",
+      "skillPath": "skills/paypal-webhooks/SKILL.md",
+      "computedHash": "e5ddd8ec48e9cb899079c87cd28ba9b4e310e5813f1e327adee60561bc76cc2b"
+    },
+    "postmark-webhooks": {
+      "source": "hookdeck/webhook-skills",
+      "sourceType": "github",
+      "skillPath": "skills/postmark-webhooks/SKILL.md",
+      "computedHash": "3aced62cf0024c6e9a238b7a4ec5e822ff9e87ec07201a8a0e6ba229be6dfd27"
+    },
+    "programmatic-seo": {
+      "source": "rampstackco/claude-skills",
+      "sourceType": "github",
+      "skillPath": "skills/programmatic-seo/SKILL.md",
+      "computedHash": "d342924e63f84cfa721cee705f748d60010cfa591cb810af35d2dd7f31fe6336"
+    },
+    "replicate-webhooks": {
+      "source": "hookdeck/webhook-skills",
+      "sourceType": "github",
+      "skillPath": "skills/replicate-webhooks/SKILL.md",
+      "computedHash": "7a3ad2ad21b2ab39fb4b2919e8f3e5792156d439c3cb5e257dac2af5c9a51f43"
+    },
+    "resend-webhooks": {
+      "source": "hookdeck/webhook-skills",
+      "sourceType": "github",
+      "skillPath": "skills/resend-webhooks/SKILL.md",
+      "computedHash": "193b849f4e1b4e6b5ac7b827d3d2db78ca0a546390eed7c4e78332afda79fa48"
+    },
+    "scrapfly-webhooks": {
+      "source": "hookdeck/webhook-skills",
+      "sourceType": "github",
+      "skillPath": "skills/scrapfly-webhooks/SKILL.md",
+      "computedHash": "90413abc7f6d6ddd37d8db868036c91584512af9dfc37508453108821fe50c41"
+    },
+    "sendgrid-webhooks": {
+      "source": "hookdeck/webhook-skills",
+      "sourceType": "github",
+      "skillPath": "skills/sendgrid-webhooks/SKILL.md",
+      "computedHash": "ddcf50d277231f7fe332cebc9543175697310477b3158fae6241b173c3760e5a"
+    },
+    "shopify-webhooks": {
+      "source": "hookdeck/webhook-skills",
+      "sourceType": "github",
+      "skillPath": "skills/shopify-webhooks/SKILL.md",
+      "computedHash": "a206acf69048b0ff5fb099f0a499271307977fcf5e19d6ef74b66c19f3018a78"
+    },
+    "slack-webhooks": {
+      "source": "hookdeck/webhook-skills",
+      "sourceType": "github",
+      "skillPath": "skills/slack-webhooks/SKILL.md",
+      "computedHash": "3b0f48d5123b8e94498b11b102fab0661cd5dbb92367ffd549907d5e507fc399"
+    },
+    "stripe-integration": {
+      "source": "wshobson/agents",
+      "sourceType": "github",
+      "skillPath": "plugins/payment-processing/skills/stripe-integration/SKILL.md",
+      "computedHash": "4621fa0a1ee27f92961628115f1a2dd305569acb777f4933bcbffcda3037bd53"
+    },
+    "stripe-webhooks": {
+      "source": "hookdeck/webhook-skills",
+      "sourceType": "github",
+      "skillPath": "skills/stripe-webhooks/SKILL.md",
+      "computedHash": "28364a156bccebbf226280056334fdffd76a2c688d7a6d041aaf2c9fa9f61d82"
+    },
+    "twilio-webhooks": {
+      "source": "hookdeck/webhook-skills",
+      "sourceType": "github",
+      "skillPath": "skills/twilio-webhooks/SKILL.md",
+      "computedHash": "c965b33f1e8c235b1d790757fdca69ad7ddf68cdb1ddfe36222cd1fc843b6068"
+    },
+    "vercel-ai-sdk": {
+      "source": "wsimmonds/claude-nextjs-skills",
+      "sourceType": "github",
+      "skillPath": "vercel-ai-sdk/SKILL.md",
+      "computedHash": "4e3823589ae719bda2a449c11203a642e7c046ef2d39289379b8cfa7dd050205"
+    },
+    "vercel-webhooks": {
+      "source": "hookdeck/webhook-skills",
+      "sourceType": "github",
+      "skillPath": "skills/vercel-webhooks/SKILL.md",
+      "computedHash": "7163c4b6cfe822ee8860ddcb427ffe60a2b559ae5549ef22f1729b152b780464"
+    },
+    "webapp-testing": {
+      "source": "anthropics/skills",
+      "sourceType": "github",
+      "skillPath": "skills/webapp-testing/SKILL.md",
+      "computedHash": "ad5b1fc52807e9afa4635e59218a026b164dc58b6c3f41b0f7c644dcd6ccf572"
+    },
+    "webflow-webhooks": {
+      "source": "hookdeck/webhook-skills",
+      "sourceType": "github",
+      "skillPath": "skills/webflow-webhooks/SKILL.md",
+      "computedHash": "c83fb0d65c12970eacbcd6bc11cd79ac908ce7702a13f5ff3b79be0bc8081b2a"
+    },
+    "webhook-dx-audit": {
+      "source": "hookdeck/webhook-skills",
+      "sourceType": "github",
+      "skillPath": "skills/webhook-dx-audit/SKILL.md",
+      "computedHash": "9e459319a9290b243d6f3b91cf750401ad3f1f27f80efa9e6759d0ed1c2427d5"
+    },
+    "webhook-handler-patterns": {
+      "source": "hookdeck/webhook-skills",
+      "sourceType": "github",
+      "skillPath": "skills/webhook-handler-patterns/SKILL.md",
+      "computedHash": "512aef08d8e024d31b09b118745e80bd575c40e3435be94e810c20cbb7dd282d"
+    },
+    "woocommerce-webhooks": {
+      "source": "hookdeck/webhook-skills",
+      "sourceType": "github",
+      "skillPath": "skills/woocommerce-webhooks/SKILL.md",
+      "computedHash": "54b8368a4f4f1d17da8825efeaa5f272abe996db015c6ec3609e6d368f1cd63e"
+    }
+  }
+}
