@@ -17,7 +17,9 @@
 > 7. **Assurance** : pas d'obligation légale (sauf RC copropriété) — **exigence contractuelle** recommandée, pas une infraction.
 > 8. **Durée résidence principale** : **120 jours** (règle nationale) ; **90 jours seulement si la commune a délibéré**.
 >
-> Le contenu ci-dessous est conservé tel quel pour l'historique, mais les sections 3 (réglementaire), 4 (MODULE 0/1) et 6 doivent être lues à travers ces corrections.
+> **9. Dimensionnement de marché** : le « ~1,1M sur 1,2M en infraction (92 %) » et la table de projection (section 5, bâtie sur des packs 299/449/599 €) sont **caducs**. Voir **[docs/DIMENSIONNEMENT-MARCHE-REALISTE.md](DIMENSIONNEMENT-MARCHE-REALISTE.md)** : le vrai cœur de cible non conforme ET solvable est de ~150k–400k loueurs (pas 1,1M) ; TAM ≈ 90–180 M€, SAM ≈ 25–55 M€, SOM an 1-3 ≈ 0,2 → 1,5 M€ ; projections recalées sur les tarifs actuels (50/99/150 € + 29 €/mois).
+>
+> Le contenu ci-dessous est conservé tel quel pour l'historique, mais les sections 3 (réglementaire), 4 (MODULE 0/1), 5 (modèle économique) et 6 doivent être lues à travers ces corrections.
 
 ---
 
