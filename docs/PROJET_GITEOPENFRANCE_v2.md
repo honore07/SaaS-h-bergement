@@ -4,6 +4,23 @@
 
 ---
 
+> ## ⚠️ ERRATUM RÉGLEMENTAIRE (juillet 2026) — LIRE AVANT LA SUITE
+>
+> Une vérification sur sources officielles (voir **[docs/RAPPORT-VERIFICATION-REGLEMENTAIRE.md](RAPPORT-VERIFICATION-REGLEMENTAIRE.md)**) a corrigé plusieurs points de ce document. **En cas de contradiction, le rapport de vérification fait foi.**
+>
+> 1. **Declaloc n'est PAS le téléservice national.** C'est un produit privé utilisé par ~420 communes abonnées. Depuis le 20 mai 2026 l'enregistrement est obligatoire **partout**, mais le **canal** varie : Declaloc (communes abonnées), téléservice propre (Paris…), ou **CERFA 14004*04 en mairie** ailleurs. Le téléservice national DGE (API Meublés) n'est déployé côté loueurs qu'au 2nd semestre 2026. → Parler de « **numéro d'enregistrement** », pas de « numéro Declaloc ».
+> 2. **DPE — le calendrier « G interdit 2025 / F 2028 / E 2034 » est FAUX pour les meublés de tourisme** (il vise les baux d'habitation). Règle réelle : DPE **A-E** pour une nouvelle autorisation de changement d'usage (depuis nov. 2024) ; **A-D pour tous les meublés d'ici le 1/1/2034** (A-E outre-mer), sauf résidence principale du loueur. Amende administrative 5 000 € max. → Ne plus présenter le DPE G comme une infraction actuelle.
+> 3. **Amendes** : défaut d'enregistrement 10 000 € (**administrative, prononcée par la commune**), fausse déclaration 20 000 €. Le « 5 000 € défaut d'affichage » est l'ancien régime **abrogé** ; la sanction de 12 500 €/annonce vise les **plateformes**.
+> 4. **Micro-BIC classé** : abattement **50 %** / 77 700 € (pas 71 %). Revenus imposables **dès le 1er euro** (le seuil 23 000 € n'est que social). **SIE** compétent = **lieu du bien**.
+> 5. **CFE** : exonération seulement si le local fait partie de l'**habitation personnelle** du loueur ; un bien dédié est imposable (sauf recettes ≤ 5 000 € ou année de création).
+> 6. **Registre du logeur** : concerne la taxe **au réel** collectée par le loueur ; si la plateforme collecte (cas des loueurs non pros), **c'est elle qui déclare**. Distinct de la fiche de police (voyageurs étrangers).
+> 7. **Assurance** : pas d'obligation légale (sauf RC copropriété) — **exigence contractuelle** recommandée, pas une infraction.
+> 8. **Durée résidence principale** : **120 jours** (règle nationale) ; **90 jours seulement si la commune a délibéré**.
+>
+> Le contenu ci-dessous est conservé tel quel pour l'historique, mais les sections 3 (réglementaire), 4 (MODULE 0/1) et 6 doivent être lues à travers ces corrections.
+
+---
+
 ## 0. PIVOT STRATÉGIQUE — LIRE EN PREMIER
 
 ### Le changement de cap
