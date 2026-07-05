@@ -18,9 +18,9 @@ const TYPE_LABELS: Record<HebergementType, string> = {
 };
 
 const PACK_LABELS: Record<ScoringResult["packRecommande"], string> = {
-  essentiel: "Pack Régularisation Essentiel (299 €)",
-  complet: "Pack Régularisation Complet (449 €)",
-  express: "Pack Régularisation Express (599 €)",
+  essentiel: "Pack Régularisation Essentiel (50 €)",
+  complet: "Pack Régularisation Complet (99 €)",
+  express: "Pack Régularisation Express (150 €)",
 };
 
 export async function genererSynthese(
@@ -96,8 +96,8 @@ function syntheseLocale(input: DiagnosticInput, scoring: ScoringResult): string 
       `Bonne nouvelle : d'après vos réponses, votre ${type} à ${commune} ne présente ` +
       `aucune infraction détectée. Votre score de conformité est de 10/10 et votre ` +
       `exposition financière estimée est nulle. Vos obligations principales — enregistrement ` +
-      `Declaloc, DPE, immatriculation, déclaration fiscale, registre du logeur, taxe de séjour ` +
-      `et assurance — semblent couvertes. Restez vigilant : la réglementation évolue vite ` +
+      `du meublé, performance énergétique, immatriculation, déclaration fiscale, registre du ` +
+      `logeur, taxe de séjour et assurance — semblent couvertes. Restez vigilant : la réglementation évolue vite ` +
       `(loi Le Meur, seuils micro-BIC, calendrier DPE) et une obligation respectée aujourd'hui ` +
       `peut nécessiter un renouvellement demain. Pensez à refaire ce diagnostic après tout ` +
       `changement dans votre activité.`

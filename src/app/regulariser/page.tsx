@@ -9,7 +9,7 @@ import { formatEuros } from "@/lib/format";
 export const metadata: Metadata = {
   title: "Packs de régularisation — Declaloc, fiscal, registre du logeur",
   description:
-    "Régularisez votre meublé de tourisme à prix fixe : Pack Essentiel 299 € (Declaloc, fiscal, registre du logeur), Pack Complet 449 €, Pack Express 599 € avec support 24 h. Puis restez conforme avec l'abonnement à 29 €/mois.",
+    "Régularisez votre meublé de tourisme à petit prix : Pack Essentiel 50 € (enregistrement, fiscal, registre du logeur), Pack Complet 99 €, Pack Express 150 € avec support 24 h. Puis restez conforme avec l'abonnement à 29 €/mois.",
   alternates: {
     canonical: "/regulariser",
   },
@@ -75,9 +75,9 @@ const urgences: Urgence[] = [
     title: "DPE et assurance",
     availability: "Packs Complet et Express",
     intro:
-      "La classe G est interdite à la location depuis janvier 2025, la classe F le sera en 2028 — et votre assureur doit connaître votre activité.",
+      "Contrairement aux baux d’habitation, votre meublé de tourisme n’est pas interdit à la location selon sa classe énergétique aujourd’hui ; en revanche tous les meublés devront être classés A à D d’ici le 1ᵉʳ janvier 2034. Et votre assureur doit connaître votre activité.",
     items: [
-      "Plan d’action personnalisé selon votre classe DPE",
+      "Plan d’action personnalisé pour anticiper l’échéance DPE 2034",
       "Annuaire des diagnostiqueurs agréés ADEME, département par département",
       "Lettre type à votre assureur pour déclarer votre activité d’hébergement",
     ],

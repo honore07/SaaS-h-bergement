@@ -25,7 +25,7 @@ export interface DiagnosticBaseInfo {
 }
 
 export interface DiagnosticAnswers {
-  /** Q1 — Numéro Declaloc obtenu avant le 20 mai 2026 */
+  /** Q1 — Numéro d'enregistrement du meublé obtenu (canal selon la commune : téléservice, Declaloc ou mairie) */
   declaloc: YesNoUnknown;
   /** Q2 — Numéro affiché sur toutes les annonces */
   numeroAffiche: "oui" | "non";

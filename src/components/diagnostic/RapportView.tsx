@@ -18,17 +18,17 @@ const PACKS: Record<
 > = {
   essentiel: {
     nom: "Pack Régularisation Essentiel",
-    prix: "299 €",
-    contenu: "Declaloc + régularisation fiscale + registre du logeur",
+    prix: "50 €",
+    contenu: "Enregistrement + régularisation fiscale + registre du logeur",
   },
   complet: {
     nom: "Pack Régularisation Complet",
-    prix: "449 €",
+    prix: "99 €",
     contenu: "Essentiel + taxe de séjour + assurance + DPE",
   },
   express: {
     nom: "Pack Régularisation Express",
-    prix: "599 €",
+    prix: "150 €",
     contenu: "Complet + support prioritaire sous 24 h",
   },
 };

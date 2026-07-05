@@ -7,6 +7,10 @@ import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { Input, Label, Select } from "@/components/ui/Input";
 import { track } from "@/lib/tracking";
+import {
+  detecterCanal,
+  type ResultatCanal,
+} from "@/lib/api/enregistrement";
 import { QuestionCard, type QuestionOption } from "./QuestionCard";
 import type {
   ClasseDPE,
@@ -62,41 +66,34 @@ function insightApresDpe(reponses: Record<string, string>): MicroInsight {
     return {
       titre: "Vous n'êtes pas seul",
       texte:
-        "Entre 240 000 et 360 000 hébergements n'ont pas encore leur numéro Declaloc. Votre analyse intégrera la procédure de régularisation, étape par étape.",
+        "Entre 240 000 et 360 000 hébergements n'ont pas encore leur numéro d'enregistrement. Votre analyse intégrera la procédure de régularisation, étape par étape, selon le canal de votre commune.",
     };
   }
-  if (reponses.dpe === "oui" && reponses.dpeClasse === "G") {
-    return {
-      titre: "Un point décisif pour votre analyse",
-      texte:
-        "La classe G est interdite à la location depuis janvier 2025. Votre rapport détaillera vos options pour continuer à louer légalement.",
-    };
-  }
-  if (reponses.dpe === "oui" && reponses.dpeClasse === "F") {
+  if (reponses.dpe === "oui" && (reponses.dpeClasse === "F" || reponses.dpeClasse === "G")) {
     return {
       titre: "Une échéance à anticiper",
       texte:
-        "La classe F sera interdite à la location en 2028. Votre rapport vous dira comment anticiper sans interrompre votre activité.",
+        "Votre meublé de tourisme n'est pas interdit à la location aujourd'hui du fait de sa classe énergétique. En revanche, tous les meublés devront être classés A à D d'ici le 1er janvier 2034. Votre rapport vous dira comment anticiper sans interrompre votre activité.",
     };
   }
   if (reponses.dpe !== "oui") {
     return {
-      titre: "Un document à ne pas négliger",
+      titre: "Un point à éclaircir",
       texte:
-        "Sans DPE valide, impossible de savoir si votre logement est visé par l'interdiction de louer les classes G (depuis janvier 2025) puis F (2028). Votre analyse en tiendra compte.",
+        "Connaître votre classe énergétique vous permet d'anticiper : une classe A à D sera exigée de tous les meublés de tourisme d'ici le 1er janvier 2034. Votre analyse en tiendra compte.",
     };
   }
   if (reponses.numeroAffiche === "non") {
     return {
       titre: "Vos annonces d'abord",
       texte:
-        "Depuis le 20 mai 2026, les plateformes retirent les annonces qui n'affichent pas le numéro d'enregistrement. Votre analyse évaluera le risque pour vos annonces.",
+        "Le numéro d'enregistrement doit figurer sur toutes vos annonces. Une fois votre numéro obtenu, il vous suffit de l'ajouter. Votre analyse fera le point sur ce volet.",
     };
   }
   return {
     titre: "Bon départ",
     texte:
-      "Declaloc, affichage du numéro, DPE : les trois contrôles les plus scrutés semblent en ordre. Passons au volet fiscal — 300 000 à 420 000 hébergeurs y sont en défaut sans le savoir.",
+      "Enregistrement, affichage du numéro, performance énergétique : les trois premiers contrôles semblent en ordre. Passons au volet fiscal — 300 000 à 420 000 hébergeurs y sont en défaut sans le savoir.",
   };
 }
 
@@ -140,7 +137,7 @@ const QUESTIONS: QuestionDef[] = [
   {
     key: "declaloc",
     libelle:
-      "Avez-vous obtenu votre numéro Declaloc avant le 20 mai 2026 ?",
+      "Avez-vous obtenu votre numéro d'enregistrement de meublé de tourisme ?",
     options: [
       { value: "oui", label: "Oui" },
       { value: "non", label: "Non" },
@@ -228,6 +225,10 @@ export function DiagnosticWizard() {
   const [adresse, setAdresse] = useState("");
   const [codeInsee, setCodeInsee] = useState("");
   const [commune, setCommune] = useState("");
+  // Canal d'enregistrement détecté à partir de la commune (adresse BAN) :
+  // sert à afficher la bonne procédure de régularisation. null tant que la
+  // détection n'a pas abouti (fallback silencieux : rien affiché).
+  const [canal, setCanal] = useState<ResultatCanal | null>(null);
   const [typeHebergement, setTypeHebergement] = useState<"" | HebergementType>(
     ""
   );
@@ -532,6 +533,11 @@ export function DiagnosticWizard() {
                   setAdresse(r.label);
                   setCodeInsee(r.citycode);
                   setCommune(r.city);
+                  // Détection best-effort du canal d'enregistrement ; en cas
+                  // d'échec on n'affiche simplement pas la guidance.
+                  void detecterCanal(r.citycode, r.city)
+                    .then(setCanal)
+                    .catch(() => setCanal(null));
                 }}
               />
               {commune !== "" && (
@@ -735,6 +741,25 @@ export function DiagnosticWizard() {
               )}
             </p>
           </div>
+
+          {reponses.declaloc !== "oui" && canal && (
+            <div className="mb-5 rounded-lg bg-brand-50 px-4 py-3 text-xs leading-relaxed text-brand-900">
+              <p className="font-semibold">
+                Votre enregistrement ({canal.libelle})
+              </p>
+              <p className="mt-1 text-brand-900/80">{canal.instruction}</p>
+              {canal.url && (
+                <a
+                  href={canal.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-1.5 inline-block font-semibold underline"
+                >
+                  Vérifier le canal de ma commune
+                </a>
+              )}
+            </div>
+          )}
 
           <form
             className="space-y-4"

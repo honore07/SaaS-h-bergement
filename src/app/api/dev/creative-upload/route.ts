@@ -6,7 +6,7 @@ import path from "node:path";
 const CORS_HEADERS: Record<string, string> = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Methods": "POST, OPTIONS",
-  "Access-Control-Allow-Headers": "Content-Type",
+  "Access-Control-Allow-Headers": "Content-Type, x-filename",
   // Requis par Chrome pour les requêtes HTTPS → localhost (Private Network Access)
   "Access-Control-Allow-Private-Network": "true",
 };

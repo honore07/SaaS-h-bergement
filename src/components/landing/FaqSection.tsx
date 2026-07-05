@@ -7,9 +7,9 @@ const faqs = [
       "C’est ce que pensent la plupart des 1,1 million d’hébergeurs concernés. Le registre du logeur, par exemple, manque dans plus de 9 hébergements sur 10 — et il reste obligatoire même quand Airbnb collecte la taxe de séjour. Le diagnostic vous le dit en 3 minutes, gratuitement : soit vous êtes en règle et vous dormez tranquille, soit vous savez exactement quoi corriger.",
   },
   {
-    question: "« 299 €, c’est trop cher. »",
+    question: "« Est-ce que ça vaut le coût ? »",
     answer:
-      "Le défaut d’enregistrement Declaloc seul est passible de 10 000 € d’amende par logement, et un redressement fiscal peut ajouter une majoration de 40 à 80 %. Un pack coûte moins de 3 % du risque qu’il élimine — et beaucoup moins qu’une consultation d’avocat ou d’expert-comptable pour le même périmètre.",
+      "Nos packs démarrent à 50 €. Le seul défaut d’enregistrement du meublé est passible de 10 000 € d’amende par logement (amende administrative prononcée par la commune), et un redressement fiscal peut ajouter une majoration de 40 à 80 %. Un pack coûte une fraction du risque qu’il élimine — et beaucoup moins qu’une consultation d’avocat ou d’expert-comptable pour le même périmètre.",
   },
   {
     question: "« Je n’ai pas le temps de m’en occuper. »",

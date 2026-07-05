@@ -1,0 +1,22 @@
+<!doctype html>
+<!-- Récepteur DEV pour les créas générées dans le navigateur (postMessage → API dev-only).
+     Ne fait rien en production : l'API /api/dev/creative-upload renvoie 404 hors dev. -->
+<meta charset="utf-8" />
+<title>creative-receiver</title>
+<script>
+  window.addEventListener("message", async (e) => {
+    const { name, blob } = e.data || {};
+    if (!name || !(blob instanceof Blob)) return;
+    try {
+      const res = await fetch("/api/dev/creative-upload", {
+        method: "POST",
+        headers: { "Content-Type": "image/png", "x-filename": name },
+        body: blob,
+      });
+      const out = await res.json().catch(() => ({ status: res.status }));
+      e.source && e.source.postMessage({ receiver: "creative", name, out }, "*");
+    } catch (err) {
+      e.source && e.source.postMessage({ receiver: "creative", name, out: { error: String(err) } }, "*");
+    }
+  });
+</script>
